@@ -1,4 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
+import { login } from "../services/AuthService";
+import { useNavigate } from "react-router-dom";
 
 type Inputs = {
   email: string;
@@ -6,21 +8,25 @@ type Inputs = {
 };
 
 const Login = () => {
+  const path = useNavigate();
+
   const {
     register,
     handleSubmit,
     // watch,
     formState: { errors },
   } = useForm<Inputs>();
-  const login: SubmitHandler<Inputs> = () => {
-    console.log(1231232);
+
+  const handleLogin: SubmitHandler<Inputs> = async (data) => {
+    const logged = await login(data);
+    logged && path("/dashboard");
   };
   // console.log(watch("example"));
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
         <h1 className="text-lg font-bold mb-8 text-center">Đăng Nhập</h1>
-        <form onSubmit={handleSubmit(login)}>
+        <form onSubmit={handleSubmit(handleLogin)}>
           <div className="mb-4">
             <label htmlFor="email" className="d-block text-gray-700 font-bold">
               Email:
