@@ -1,6 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { login } from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../context/ToastContext";
 
 type Inputs = {
   email: string;
@@ -9,7 +10,7 @@ type Inputs = {
 
 const Login = () => {
   const path = useNavigate();
-
+  const { setMessage } = useToast();
   const {
     register,
     handleSubmit,
@@ -19,6 +20,9 @@ const Login = () => {
 
   const handleLogin: SubmitHandler<Inputs> = async (data) => {
     const logged = await login(data);
+
+    setMessage("Đăng nhập thành công", "error");
+
     logged && path("/dashboard");
   };
   // console.log(watch("example"));
