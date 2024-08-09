@@ -4,6 +4,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 
 import { ToastProvider } from "./context/ToastContext";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -25,8 +27,19 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   // <React.StrictMode>
   // </React.StrictMode>
-  <ToastProvider>
-    <RouterProvider router={router} />
-    <ToastContainer />
-  </ToastProvider>
+  /**
+   *  context provider
+  // <ToastProvider>
+  //   <RouterProvider router={router} />
+  //   <ToastContainer />
+  // </ToastProvider>
+  */
+
+  // redux
+  <Provider store={store}>
+    <ToastProvider>
+      <RouterProvider router={router} />
+      <ToastContainer />
+    </ToastProvider>
+  </Provider>
 );

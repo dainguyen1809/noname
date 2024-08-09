@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { ToastType } from "../context/ToastContext";
+import { ToastType } from "../utils/toast";
 
 export const showNotify = (
   message: string,
@@ -23,5 +23,24 @@ export const showNotify = (
     }
 
     setMessage("", null);
+  }
+};
+
+export const showToast = (message: string, type: ToastType) => {
+  if (message) {
+    switch (type) {
+      case "success":
+        toast.success(message);
+        break;
+      case "warning":
+        toast.warning(message);
+        break;
+      case "error":
+        toast.error(message);
+        break;
+
+      default:
+        break;
+    }
   }
 };
